@@ -1,4 +1,4 @@
-from restoration_graph import START, GOAL, available_actions, apply_action
+from second_toy_problem import START, GOAL, available_actions, apply_action
 from planner import bfs_search
 
 if __name__ == "__main__":
