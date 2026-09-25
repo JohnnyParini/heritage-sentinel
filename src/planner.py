@@ -13,11 +13,10 @@ def bfs_search(start, goal, available_actions, apply_action):
             new_state = apply_action(state, action)
 
             if new_state not in visited:
+                visited.add(new_state)
                 new_path = path + [action]
                 frontier.append((new_state, new_path))
             
-        visited.add(state)
-
         # TODO: for each action available from `state`, compute the next
         # state, and if it hasn't been visited, add it to the frontier
         # with the updated path.

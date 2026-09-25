@@ -1,5 +1,6 @@
 # tests/test_planner.py
 from src.restoration_graph import ACTIONS, START, GOAL, available_actions, apply_action
+from large_action_set import LARGE_ACTIONS, LARGE_START, LARGE_GOAL, large_available_actions, large_apply_action
 from src.planner import bfs_search
 
 def is_valid_plan(plan, actions=ACTIONS):
@@ -39,7 +40,7 @@ def test_no_solution_returns_none():
     # (a circular or impossible prerequisite). Then assert that
     # bfs_search returns None instead of crashing or hanging forever.
     
-    new_set = set(ACTIONS.keys).add("FAIL NODE")
+    new_set = set(ACTIONS.keys()).add("FAIL NODE")
     plan = bfs_search(START, new_set, available_actions, apply_action)
     assert plan is None
 
@@ -50,4 +51,5 @@ def test_large_action_set_terminates():
     # prerequisites) and assert bfs_search still returns within a couple
     # of seconds. This isn't about speed — it's about proving the search
     # actually terminates instead of looping.
-    ...
+    plan = bfs_search(LARGE_START, LARGE_GOAL, large_available_actions, large_apply_action)
+    assert is_valid_plan(plan, actions=LARGE_ACTIONS)
