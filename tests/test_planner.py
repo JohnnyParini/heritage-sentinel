@@ -1,6 +1,6 @@
 # tests/test_planner.py
 from src.restoration_graph import ACTIONS, START, GOAL, available_actions, apply_action
-from large_action_set import LARGE_ACTIONS, LARGE_START, LARGE_GOAL, large_available_actions, large_apply_action
+from tests.large_action_set import LARGE_ACTIONS, LARGE_START, LARGE_GOAL, large_available_actions, large_apply_action
 from src.planner import bfs_search
 
 def is_valid_plan(plan, actions=ACTIONS):
