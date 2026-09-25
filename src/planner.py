@@ -21,5 +21,5 @@ def bfs_search(start, goal, available_actions, apply_action):
         # TODO: for each action available from `state`, compute the next
         # state, and if it hasn't been visited, add it to the frontier
         # with the updated path.
-        ...
+        
     return None  # no valid sequence exists
