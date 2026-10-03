@@ -3,7 +3,7 @@ from src.restoration_graph import ACTIONS, START, GOAL, available_actions, apply
 from tests.large_action_set import LARGE_ACTIONS, LARGE_START, LARGE_GOAL, large_available_actions, large_apply_action
 from src.planner import bfs_search
 
-def is_valid_plan(plan, actions=ACTIONS):
+def is_valid_plan(plan, tranche_cap=None, actions=ACTIONS):
     """A plan is valid if every action's prerequisites are satisfied by
     the actions before it, and every required action appears exactly once."""
     completed = set()
@@ -12,6 +12,8 @@ def is_valid_plan(plan, actions=ACTIONS):
             return False          # duplicate action
         if not actions[action]["requires"].issubset(completed):
             return False          # prerequisite violated
+        if tranche_cap is not None and sum(actions[a]["cost"] for a in completed if plan.index(a) <= 1) > tranche_cap:
+            return False          # tranche cap exceeded
         completed.add(action)
     return completed == set(actions.keys())
 

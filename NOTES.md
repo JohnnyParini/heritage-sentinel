@@ -5,3 +5,9 @@ When swapping the problem file, our BFS implementation found a correct solution 
 # Lab P2
 
 The test case test_no_solution_returns_none passed, indicating that our original BFS implementation correctly handles cases where there are no solutions
+
+# Lab P3
+
+1. The hidden trap experiment showed a random order output everytime the program was run. This was because the values in a set aren't hashed the same way every time, so their order differs each time the program is run
+
+2. The oracle breaking teaches us that our tests must evolve with our program. As the requirements for a valid output change, the tests that verify an output's validity must also change.
