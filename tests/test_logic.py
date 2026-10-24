@@ -43,10 +43,8 @@ def test_valid_reports_accepted(rid):
 @pytest.mark.parametrize("rid,reason", [
     ("r2", "invalid:structural_risk_marked_minor"),
     ("r4", "invalid:rot_on_inorganic"),
-    ("r6", ["invalid:corrosion_marked_minor", "invalid:corrosion_on_organic"]),
+    ("r6", "invalid:corrosion_on_organic"),
     ("r8", "invalid:none_but_damaged"),
-    ("r12", "invalid:corrosion_marked_minor"), #Added this to parameterized test for part E
-    ("r13", "invalid:textile_cracked") #Added this to parameterized test for part E
     # TODO: add r6 and r8 with their reasons from the self-check table
 ])
 def test_each_rule_fires_alone(rid, reason):

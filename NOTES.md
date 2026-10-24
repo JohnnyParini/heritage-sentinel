@@ -40,3 +40,12 @@ This can't be a Horn clause because we would have no way of making a no damage l
 One potential fix I see to this is in logic.py, we can add an if statement after the for loop that says if not changed (nothing changed) and not "has_damage" in known (the artifact is not damaged), then we can add not damaged and make changed = true to keep looping with not damaged. 
 We could also alternatively check the facts at the beginning to see if there is anything in damages then adding in no damage if there is no damage in the facts
 The overall cost of this isn't that high, at most it's like one if statement at the beginning if we go with the second implementation I proposed (I realize now the first implementation is prob a lot more inefficient).
+
+# Lab P5
+Predictions
+1. I predict this will be accepted
+2. I predict this will be acceped
+3. I predict this will be quarantined
+4. I predict this will be rejected
+5. I predict this will be rejected
+
