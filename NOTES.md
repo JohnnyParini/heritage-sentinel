@@ -49,3 +49,23 @@ Predictions
 4. I predict this will be rejected
 5. I predict this will be rejected
 
+Questions
+1. **Your predictions**. Where did you disagree with the pipeline on the five planted reports, and who was right?
+My predictions where different from the pipeline on a-odd1 and a-odd2. I predicted both would be accepted, but the pipeline quarantined both as improbable. The pipline appears to be right because the combinations are unusual under the reference data, even though they pass the logic checks. 
+
+2. **Independence**. The model treats each damage type as independent of the others, given the material. Name one real dependency it ignores. (Think about what crack and loose_base on the same object might mean.)
+Crack and loose_base together suggest structural damage so a real object with both is more likely to be rated major and the generator hard-codes that. The model treats each damage type as independent given the material. Its only link to severity is the damage count, so it cannot tell a crack plus loose_base from a crack plus fading. Both count as 2+ and get the same severity probabilities.
+
+3. **Parameters**. Count the model's free parameters and check against 35. Is 400 reference reports enough to estimate them? What would go wrong with 40?
+For the likelihood model there are 35 free parameters: 4 for the five-way material distribution, 25 for five binary damage probabilities across five materials, and 6 for severity across the three damage-count buckets. Four hundred reports are enough for a rough estimate in this small example, but some material/damage combinations are still rare. With only 40 reports, the conditional groups would be very sparse, estimates would be noisy, and many combinations could have zero observations.
+
+4. **Smoothing**. Your unsmoothed-model test raises an error. Describe a realistic production situation that would trigger the same failure.
+Without smoothing, an unobserved material/damage combination gets probability zero. For example, a real report of corrosion on stone may never have appeared in the reference set. Scoring it calls log(0), which raises ValueError. This can happen in production when a rare combination appears, even if it is valid.
+
+5.  **Calibration.** You calibrated the threshold on the same 400 reports the model was fitted on, yet the held-out quarantine rate came out close to 2%. Why was the gap small here? What would make it larger? (Week 6 will give this problem a name.)
+he held-out quarantine rate came close to the 2% target (2.15%, 43 of 2,000 reports) because the held-out reports came from the same stable generator as the reference reports and this is a relatively small, smoothed model. The in-sample threshold is still optimistic because the same reports were used to fit the model and calibrate the cutoff. A smaller reference set, a more complex model with more parameters, or a changed real-world reporting distribution could all make the gap larger .
+
+6. **Quarantine versus reject.** a-odd3 is a textile object with a crack *and* a loose base, rated major. Suppose it's a real, correctly reported, unusual find. What does this system do to people who report rare but true things? Where would you move the threshold if losing a rare discovery were worse than admitting one typo, and what would you pay for that?
+a-odd3 passes the logic checks but is quarantined as improbable, meaning a rare but accurate report would be wrongly viewed as suspicious, leading to delays in analysis or entire disregardment of the result. The threshhold can be lowered to if losing a rare discovery were worse than admitting one typo. The consequence of this is that more problematic/false reports will pass as acceptable, increasing the risk of review and causing redundant work.
+
+
